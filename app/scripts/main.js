@@ -4,6 +4,12 @@
     var errorEle = $('#show-error');
     var mobileEle = $('#mobile');
     var nameCnEle = $('#name-cn');
+    var sourceCode = '';
+    var absUrl = location.href;
+    if (/source_code/.test(absUrl)) {
+        sourceCode = absUrl.match('source_code=(.*)')[1];
+        window.localStorage.setItem('sourceCode', sourceCode);
+    }
 
     mobileEle.on('focus', function() {
         mobileEle.removeClass('error');
@@ -51,7 +57,8 @@
     function submit() {
         $.post('/account/register_simple', {
             nameCn: nameCnEle.val().trim(),
-            mobile: mobileEle.val().trim()
+            mobile: mobileEle.val().trim(),
+            sourceCode: sourceCode
         });
     }
 
